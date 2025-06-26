@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 export const QuestionForm = ({
+  formData,
+  categoryName,
   currentQuestionIndex,
   setCurrentQuestionIndex,
   currentQuestion,
@@ -49,6 +51,11 @@ export const QuestionForm = ({
   return (
     <section id="question-form" className="content-container">
       <form onSubmit={handleAnswerSubmit}>
+        <div id="quiz-info">
+          <p>
+            {categoryName}: {formData.difficulty}
+          </p>
+        </div>
         <div id="question">
           {currentQuestionIndex + 1}. {currentQuestion.question}
         </div>

@@ -1,11 +1,10 @@
 import "../index.css";
 
 export const Results = ({
-  user,
+  formData,
   score,
   questions,
   categoryName,
-  difficulty,
   handleTryAgain,
 }) => {
   return (
@@ -15,7 +14,7 @@ export const Results = ({
         <p>
           <b>Player:</b>
         </p>
-        <p>{user}</p>
+        <p>{formData.user}</p>
         <p>
           <b>Category:</b>
         </p>
@@ -23,7 +22,7 @@ export const Results = ({
         <p>
           <b>Difficulty:</b>
         </p>
-        <p>{difficulty}</p>
+        <p>{formData.difficulty}</p>
         <p>
           <b>Score:</b>
         </p>

@@ -5,12 +5,10 @@ import { QuizSelectForm } from "./QuizSelectForm";
 import { Results } from "./Results";
 
 export const Homepage = () => {
-  const [formData, setFormData] = useState({
-    user: "",
-    category: "",
-    difficulty: "",
-  });
+  const [user, setUser] = useState("");
+  const [category, setCategory] = useState("");
   const [categoryName, setCategoryName] = useState("");
+  const [difficulty, setDifficulty] = useState("");
   const [error, setError] = useState("");
   const [questions, setQuestions] = useState([]); // All questions
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -21,15 +19,11 @@ export const Homepage = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (
-      formData.user.trim() === "" ||
-      formData.category === "" ||
-      formData.difficulty === ""
-    ) {
+    if (user.trim() === "" || category === "" || difficulty === "") {
       setError("All fields are required.");
       return false;
     }
-    const url = `https://opentdb.com/api.php?amount=10&category=${formData.category}&difficulty=${formData.difficulty}&type=multiple&encode=url3986`;
+    const url = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple&encode=url3986`;
 
     fetchQuizData(url);
     setError("");
@@ -81,27 +75,14 @@ export const Homepage = () => {
     }
   };
 
-  const updateValue = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleTryAgain = () => {
-    setFormData((prev) => ({
-      ...prev,
-      category: "",
-      difficulty: "",
-    }));
-    setCategoryName("");
+    setFormSubmitted(false);
     setQuestions([]);
     setCurrentQuestionIndex(0);
     setScore(0);
-    setLoading(false);
+    setCategory("");
+    setDifficulty("");
     setError("");
-    setFormSubmitted(false);
   };
 
   return (
@@ -110,9 +91,13 @@ export const Homepage = () => {
 
       {!formSubmitted && (
         <QuizSelectForm
-          formData={formData}
-          updateValue={updateValue}
+          user={user}
+          setUser={setUser}
+          category={category}
+          setCategory={setCategory}
           setCategoryName={setCategoryName}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
           handleFormSubmit={handleFormSubmit}
           error={error}
         />
@@ -120,8 +105,6 @@ export const Homepage = () => {
 
       {formSubmitted && currentQuestionIndex < questions.length && (
         <QuestionForm
-          formData={formData}
-          categoryName={categoryName}
           currentQuestionIndex={currentQuestionIndex}
           setCurrentQuestionIndex={setCurrentQuestionIndex}
           currentQuestion={currentQuestion}
@@ -132,10 +115,11 @@ export const Homepage = () => {
       )}
       {formSubmitted && currentQuestionIndex >= questions.length && (
         <Results
-          formData={formData}
+          user={user}
           score={score}
           questions={questions}
           categoryName={categoryName}
+          difficulty={difficulty}
           handleTryAgain={handleTryAgain}
         />
       )}

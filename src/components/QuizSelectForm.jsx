@@ -1,11 +1,7 @@
 export const QuizSelectForm = ({
-  user,
-  setUser,
-  category,
-  setCategory,
+  formData,
+  updateValue,
   setCategoryName,
-  difficulty,
-  setDifficulty,
   handleFormSubmit,
   error,
 }) => {
@@ -16,27 +12,28 @@ export const QuizSelectForm = ({
           <label htmlFor="name">Name:</label>
           <input
             id="name"
-            name="name"
-            value={user}
-            onChange={(event) => {
-              setUser(event.target.value);
-            }}
+            name="user"
+            value={formData.user}
+            onChange={updateValue}
           />
-          {error && user === "" && <p className="error">Name is required.</p>}
+          {error && formData.user === "" && (
+            <p className="error">Name is required.</p>
+          )}
         </div>
         <div className="input-group">
           <label htmlFor="category">Category:</label>
           <select
             id="category"
-            value={category}
+            name="category"
+            value={formData.category}
             onChange={(event) => {
-              setCategory(event.target.value);
+              updateValue(event);
               const selectedIndex = event.target.selectedIndex;
               const selectedOption = event.target.options[selectedIndex];
               setCategoryName(selectedOption.text);
             }}
           >
-            <option value="" className="disabled" disabled selected>
+            <option value="" disabled>
               Please select a category
             </option>
             <option value="15">Video Games</option>
@@ -44,7 +41,7 @@ export const QuizSelectForm = ({
             <option value="31">Anime & Manga</option>
             <option value="13">Musicals & Theatres</option>
           </select>
-          {error && category === "" && (
+          {error && formData.category === "" && (
             <p className="error">Category is required.</p>
           )}
         </div>
@@ -52,27 +49,29 @@ export const QuizSelectForm = ({
           <label htmlFor="difficulty">Difficulty:</label>
           <select
             id="difficulty"
-            value={difficulty}
-            onChange={(event) => {
-              setDifficulty(event.target.value);
-            }}
+            name="difficulty"
+            value={formData.difficulty}
+            onChange={updateValue}
           >
-            <option value="" className="disabled" disabled selected>
+            <option value="" disabled>
               Please select a difficulty
             </option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
-          {error && difficulty === "" && (
+          {error && formData.difficulty === "" && (
             <p className="error">Difficulty level is required.</p>
           )}
         </div>
-        {error && (user === "" || category === "" || difficulty === "") && (
-          <p className="error">
-            <b>{error}</b>
-          </p>
-        )}
+        {error &&
+          (formData.user === "" ||
+            formData.category === "" ||
+            formData.difficulty === "") && (
+            <p className="error">
+              <b>{error}</b>
+            </p>
+          )}
         <button>Generate Quiz</button>
       </form>
     </section>
