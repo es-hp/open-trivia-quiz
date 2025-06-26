@@ -63,8 +63,7 @@ export const Homepage = () => {
         const allAnswers = shuffle([...incorrect, correct]);
 
         return {
-          // Returns new object with existing object "question", and then adds a new properties after.
-          ...question, // Spread operator (...) = Take all the key-value pairs inside the object and copy them into this new object.
+          ...question,
           question: decodedQuestion,
           correct_answer: correct,
           incorrect_answers: incorrect,
