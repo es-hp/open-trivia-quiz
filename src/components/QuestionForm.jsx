@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export const QuestionForm = ({
   formData,
+  questions,
   categoryName,
   currentQuestionIndex,
   setCurrentQuestionIndex,
@@ -9,6 +10,7 @@ export const QuestionForm = ({
   setScore,
   loading,
   error,
+  setQuizCompleted,
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -39,6 +41,14 @@ export const QuestionForm = ({
   };
 
   const handleNext = () => {
+    const isLastQuestion = currentQuestionIndex === questions.length - 1;
+
+    console.log("question qty:", questions.length);
+
+    if (isLastQuestion) {
+      setQuizCompleted(true);
+    }
+
     setSelectedAnswer("");
     setFeedback("");
     setShowAnswer(false);

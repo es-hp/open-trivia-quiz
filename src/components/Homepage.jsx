@@ -18,6 +18,7 @@ export const Homepage = () => {
   const [loading, setLoading] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [score, setScore] = useState(0);
+  const [quizCompleted, setQuizCompleted] = useState(false);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -101,6 +102,7 @@ export const Homepage = () => {
     setLoading(false);
     setError("");
     setFormSubmitted(false);
+    setQuizCompleted(false);
   };
 
   return (
@@ -120,6 +122,7 @@ export const Homepage = () => {
       {formSubmitted && currentQuestionIndex < questions.length && (
         <QuestionForm
           formData={formData}
+          questions={questions}
           categoryName={categoryName}
           currentQuestionIndex={currentQuestionIndex}
           setCurrentQuestionIndex={setCurrentQuestionIndex}
@@ -127,9 +130,10 @@ export const Homepage = () => {
           loading={loading}
           error={error}
           setScore={setScore}
+          setQuizCompleted={setQuizCompleted}
         />
       )}
-      {formSubmitted && currentQuestionIndex >= questions.length && (
+      {formSubmitted && quizCompleted && (
         <Results
           formData={formData}
           score={score}
